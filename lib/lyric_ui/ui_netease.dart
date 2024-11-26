@@ -5,21 +5,23 @@ import 'package:flutter_lyric/lyric_ui/lyric_ui.dart';
 ///should be extends LyricUI implementation your own UI.
 ///this property only for change UI,if not demand just only overwrite methods.
 class UINetease extends LyricUI {
-  double defaultSize;
-  double defaultExtSize;
-  double otherMainSize;
+  TextStyle? defaultStyle;
+  TextStyle? defaultExtStyle;
+  TextStyle? otherMainStyle;
   double bias;
   double lineGap;
   double inlineGap;
   LyricAlign lyricAlign;
   LyricBaseLine lyricBaseLine;
+  Color highlightColor;
   bool highlight;
   HighlightDirection highlightDirection;
 
   UINetease(
-      {this.defaultSize = 18,
-      this.defaultExtSize = 14,
-      this.otherMainSize = 16,
+      {this.defaultStyle,
+      this.defaultExtStyle,
+      this.otherMainStyle,
+      this.highlightColor = Colors.amber,
       this.bias = 0.5,
       this.lineGap = 25,
       this.inlineGap = 25,
@@ -30,9 +32,9 @@ class UINetease extends LyricUI {
 
   UINetease.clone(UINetease uiNetease)
       : this(
-          defaultSize: uiNetease.defaultSize,
-          defaultExtSize: uiNetease.defaultExtSize,
-          otherMainSize: uiNetease.otherMainSize,
+          defaultStyle: uiNetease.defaultStyle,
+          defaultExtStyle: uiNetease.defaultExtStyle,
+          otherMainStyle: uiNetease.otherMainStyle,
           bias: uiNetease.bias,
           lineGap: uiNetease.lineGap,
           inlineGap: uiNetease.inlineGap,
@@ -43,24 +45,16 @@ class UINetease extends LyricUI {
         );
 
   @override
-  TextStyle getPlayingExtTextStyle() =>
-      TextStyle(color: Colors.grey[300], fontSize: defaultExtSize);
+  TextStyle getPlayingExtTextStyle() => defaultExtStyle ?? TextStyle(color: Colors.grey[300], fontSize: 18);
 
   @override
-  TextStyle getOtherExtTextStyle() => TextStyle(
-        color: Colors.grey[300],
-        fontSize: defaultExtSize,
-      );
+  TextStyle getOtherExtTextStyle() => defaultExtStyle ?? TextStyle(color: Colors.grey[300], fontSize: 18);
 
   @override
-  TextStyle getOtherMainTextStyle() =>
-      TextStyle(color: Colors.grey[200], fontSize: otherMainSize);
+  TextStyle getOtherMainTextStyle() => otherMainStyle ?? TextStyle(color: Colors.grey[200], fontSize: 18);
 
   @override
-  TextStyle getPlayingMainTextStyle() => TextStyle(
-        color: Colors.white,
-        fontSize: defaultSize,
-      );
+  TextStyle getPlayingMainTextStyle() => defaultStyle ?? TextStyle(color: Colors.white, fontSize: 18);
 
   @override
   double getInlineSpace() => inlineGap;
@@ -82,4 +76,7 @@ class UINetease extends LyricUI {
 
   @override
   HighlightDirection getHighlightDirection() => highlightDirection;
+
+  @override
+  Color getLyricHightlightColor() => highlightColor;
 }
